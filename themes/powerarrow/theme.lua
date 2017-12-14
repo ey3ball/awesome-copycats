@@ -98,17 +98,19 @@ local markup = lain.util.markup
 local separators = lain.util.separators
 
 -- Binary clock
-local binclock = require("themes.powerarrow.binclock"){
-    height = 16,
-    show_seconds = true,
-    color_active = theme.fg_normal,
-    color_inactive = theme.bg_focus
-}
+-- local binclock = require("themes.powerarrow.binclock"){
+--     height = 16,
+--     show_seconds = true,
+--     color_active = theme.fg_normal,
+--     color_inactive = theme.bg_focus
+-- }
+local textclock = wibox.widget.textclock("<span font='Tamzen 5'> </span>%H:%M ")
+textclock.font = theme.font
 
 -- Calendar
 theme.cal = lain.widget.calendar({
     --cal = "cal --color=always",
-    attach_to = { binclock.widget },
+    attach_to = { textclock },
     notification_preset = {
         font = "xos4 Terminus 10",
         fg   = theme.fg_normal,
@@ -339,7 +341,7 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            wibox.container.margin(scissors, 4, 8),
+            --wibox.container.margin(scissors, 4, 8),
             --[[ using shapes
             pl(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, "#343434"),
             pl(task, "#343434"),
@@ -350,15 +352,15 @@ function theme.at_screen_connect(s)
             pl(wibox.widget { fsicon, theme.fs.widget, layout = wibox.layout.align.horizontal }, "#CB755B"),
             pl(wibox.widget { baticon, bat.widget, layout = wibox.layout.align.horizontal }, "#8DAA9A"),
             pl(wibox.widget { neticon, net.widget, layout = wibox.layout.align.horizontal }, "#C0C0A2"),
-            pl(binclock.widget, "#777E76"),
+            pl(textclock, "#777E76"),
             --]]
             -- using separators
-            arrow(theme.bg_normal, "#343434"),
-            wibox.container.background(wibox.container.margin(wibox.widget { mailicon, mail and mail.widget, layout = wibox.layout.align.horizontal }, 4, 7), "#343434"),
-            arrow("#343434", theme.bg_normal),
-            wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, 3, 6), theme.bg_focus),
-            arrow(theme.bg_normal, "#343434"),
-            wibox.container.background(wibox.container.margin(task, 3, 7), "#343434"),
+            --arrow(theme.bg_normal, "#343434"),
+            -- wibox.container.background(wibox.container.margin(wibox.widget { mailicon, mail and mail.widget, layout = wibox.layout.align.horizontal }, 4, 7), "#343434"),
+            --arrow("#343434", theme.bg_normal),
+            --wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, 3, 6), theme.bg_focus),
+            -- arrow(theme.bg_normal, "#343434"),
+            -- wibox.container.background(wibox.container.margin(task, 3, 7), "#343434"),
             arrow("#343434", "#777E76"),
             wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 2, 3), "#777E76"),
             arrow("#777E76", "#4B696D"),
@@ -372,7 +374,7 @@ function theme.at_screen_connect(s)
             arrow("#8DAA9A", "#C0C0A2"),
             wibox.container.background(wibox.container.margin(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, 3, 3), "#C0C0A2"),
             arrow("#C0C0A2", "#777E76"),
-            wibox.container.background(wibox.container.margin(binclock.widget, 4, 8), "#777E76"),
+            wibox.container.background(wibox.container.margin(textclock, 4, 8), "#777E76"),
             arrow("#777E76", "alpha"),
             --]]
             s.mylayoutbox,
